@@ -1,8 +1,6 @@
 #include <GL\glut.h>
-#include <iostream>
-using namespace std;
 
-GLfloat xRotated;
+GLfloat rotate = 0;
 GLdouble radius = 1;
 
 void reshape(int x, int y) {
@@ -21,24 +19,30 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
 
-    glTranslatef(0, 0, -5);
-    glColor3f(0.9, 0.3, 0.2);
-    glRotatef(xRotated, 0, 1, 0);
-    glScalef(1, 1, 1);
-    glutWireSphere(radius, 20, 20);
+    glTranslatef(0, 0, -20);
 
-    glTranslatef(0., 0, -5);
     glColor3f(0.9, 0.3, 0.2);
-    glRotatef(xRotated, 0, 1, 0);
-    glScalef(0.5, 0.5, 0.5);
-    glutWireSphere(radius, 20, 20);
+    glRotatef(70, 1, 0, 0);
+    glRotatef(0, 0, 1, 0);
+    glRotatef(0, 0, 0, 1);
+    glScalef(1, 1, 1);
+    glutWireSphere(1, 20, 20);
+
+
+    glColor3f(0, 0, 1);
+    glRotatef(0, 1, 0, 0);
+    glRotatef(0, 0, 1, 0);
+    glRotatef(rotate, 0, 0, 1);
+    glScalef(1, 1, 1);
+    glTranslatef(5,1,0);
+    glutWireSphere(2, 20, 10);
 
     glFlush();
 }
 
 void idle(void) {
 
-    xRotated += 0.01;
+    rotate += 0.01;
     display();
 }
 
@@ -46,7 +50,6 @@ int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitWindowSize(500, 500);
     glutCreateWindow("Solid Sphere");
-    xRotated = 0;
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
