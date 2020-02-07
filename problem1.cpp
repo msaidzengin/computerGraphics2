@@ -2,15 +2,16 @@
 #include <stdio.h>
 #include <math.h>
 #include <GL/glut.h>
+#include <iostream>
+using namespace std;
 
 GLint TIMER_DELAY = 10;
 GLfloat RED_RGB[] = { 1, 0, 0 };
 GLfloat BLUE_RGB[] = { 0, 0, 1 };
 GLfloat WHITE_RGB[] = { 1, 1, 1 };
 GLfloat BLACK_RGB[] = { 0, 0, 0 };
-
 GLfloat Lshape[7][2] = {
-    {0.00, 0.00},
+    {0.00, 0.00},  //to do  - size'a gore ayarla.
     {0.25, 0.00},
     {0.25, 0.10},
     {0.10, 0.10},
@@ -18,6 +19,11 @@ GLfloat Lshape[7][2] = {
     {0.00, 0.40},
     {0.15, 0.00} // Reference point
 };
+bool singleRotationMode = false;
+bool animationMode = false;
+int width = 500;
+int height = 500;
+float size = 1;
 
 void myInit() {
     glClearColor(0, 0, 0, 1);
@@ -26,6 +32,8 @@ void myInit() {
 }
 
 void myReshape(int winWidth, int winHeight) {
+    width = winWidth;
+    height = winHeight;
     glViewport(0, 0, winWidth, winHeight);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -45,6 +53,37 @@ void drawL() {
     glEnd();
 }
 
+void setVerticesAgain(int degree) {
+
+    Lshape[0][0] = Lshape[6][0] - 0.15;
+    Lshape[0][1] = Lshape[6][1];
+
+    Lshape[1][0] = Lshape[6][0] + 0.15;
+    Lshape[1][1] = Lshape[6][1];
+
+    Lshape[2][0] = Lshape[6][0] + 0.15;
+    Lshape[2][1] = Lshape[6][1] + 0.10;
+
+    Lshape[3][0] = Lshape[6][0];
+    Lshape[3][1] = Lshape[6][1] + 0.10;
+
+    Lshape[4][0] = Lshape[6][0];
+    Lshape[4][1] = Lshape[6][1] + 0.40;
+
+    Lshape[5][0] = Lshape[6][0] - 0.15;
+    Lshape[5][1] = Lshape[6][1] + 0.40;
+
+}
+
+void drawLAt(GLfloat x, GLfloat y, int degree) {
+
+    Lshape[6][0] = x;
+    Lshape[6][1] = y;
+
+    setVerticesAgain(degree);
+
+}
+
 void myDisplay() {
     drawL();
     glFlush();
@@ -56,13 +95,11 @@ void keyboardFunct(unsigned char c, int x, int y) {
 
     switch (c) {
     case 'q':
+    case 'Q':
         exit(0);
         break;
-    case '1':
-        break;
-    case '2':
-        break;
-    case '3':
+    case 'a':
+        animationMode = true;
         break;
     default:
         break;
@@ -105,6 +142,11 @@ void mouseFunct(int b, int s, int x, int y) {
 
         }
         if (b == GLUT_RIGHT_BUTTON) {
+            singleRotationMode = true;
+            GLfloat mouseX = 1.0 * x / width;
+            GLfloat mouseY = 1.0 * (height - y) / height;
+
+            drawLAt(mouseX, mouseY, 30);
 
         }
     }
@@ -120,13 +162,13 @@ int main(int argc, char** argv) {
 
     glutInit(&argc, argv);
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(500, 500);
+    glutInitWindowSize(width, height);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Problem 1");
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(keyboardFunct);
     glutReshapeFunc(myReshape);
-    glutMouseFunc(myMouse);
+    glutMouseFunc(mouseFunct);
     glutTimerFunc(TIMER_DELAY, myTimeOut, 0);
     myInit();
     glutMainLoop();
