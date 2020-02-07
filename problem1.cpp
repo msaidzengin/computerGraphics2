@@ -1,6 +1,7 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 #include <GL/glut.h>
-#include <GL/glu.h>
-#include <GL/gl.h>
 
 GLint TIMER_DELAY = 10;
 GLfloat RED_RGB[] = { 1, 0, 0 };
@@ -8,43 +9,46 @@ GLfloat BLUE_RGB[] = { 0, 0, 1 };
 GLfloat WHITE_RGB[] = { 1, 1, 1 };
 GLfloat BLACK_RGB[] = { 0, 0, 0 };
 
-void reshapeFunct(int w, int h) {
-    glViewport(0, 0, w, h);
+GLfloat Lshape[7][2] = {
+    {0.00, 0.00},
+    {0.25, 0.00},
+    {0.25, 0.10},
+    {0.10, 0.10},
+    {0.10, 0.40},
+    {0.00, 0.40},
+    {0.15, 0.00} // Reference point
+};
+
+void myInit() {
+    glClearColor(0, 0, 0, 1);
+    glShadeModel(GL_SMOOTH);
+
+}
+
+void myReshape(int winWidth, int winHeight) {
+    glViewport(0, 0, winWidth, winHeight);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glutPostRedisplay();
+
 }
 
-// Display function.
-void displayFunct(void) {
+void drawL() {
 
-    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
-
+    glColor3fv(RED_RGB);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 6; i++)
+        glVertex2fv(Lshape[i]);
+    glEnd();
 }
 
-// Timer function.
-void timerFunct(int id) {
-
-    glutPostRedisplay();
-    glutTimerFunc(TIMER_DELAY, timerFunct, 0);
-
-}
-
-// Mouse function. For left and right click.
-void mouseFunct(int b, int s, int x, int y) {
-
-    if (s == GLUT_DOWN) {
-        if (b == GLUT_LEFT_BUTTON) {
-
-        }
-        if (b == GLUT_RIGHT_BUTTON) {
-  
-        }
-    }
-    
+void myDisplay() {
+    drawL();
+    glFlush();
+    glutSwapBuffers();
 }
 
 // Keyboard function. Catches q,Q,1,2,3,enter
@@ -63,7 +67,6 @@ void keyboardFunct(unsigned char c, int x, int y) {
     default:
         break;
     }
-
 }
 
 // Catches arrow keys.
@@ -80,26 +83,52 @@ void catchKeyFunct(int key, int x, int y) {
     }
     else if (key == GLUT_KEY_UP) {
 
-
     }
 }
 
-// Main function.
+void myMouse(int b, int s, int x, int y) {
+
+    switch (b) {
+    case GLUT_LEFT_BUTTON:
+        if (s == GLUT_DOWN) {
+
+        }
+        else if (s == GLUT_UP) {
+
+        }
+    }
+}
+void mouseFunct(int b, int s, int x, int y) {
+
+    if (s == GLUT_DOWN) {
+        if (b == GLUT_LEFT_BUTTON) {
+
+        }
+        if (b == GLUT_RIGHT_BUTTON) {
+
+        }
+    }
+}
+
+void myTimeOut(int id) {
+
+    glutPostRedisplay();
+    glutTimerFunc(TIMER_DELAY, myTimeOut, 0);
+}
+
 int main(int argc, char** argv) {
 
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+    glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow(argv[0]);
-
-    glutDisplayFunc(displayFunct);
-    glutReshapeFunc(reshapeFunct);
-    glutMouseFunc(mouseFunct);
+    glutCreateWindow("Problem 1");
+    glutDisplayFunc(myDisplay);
     glutKeyboardFunc(keyboardFunct);
-    glutSpecialFunc(catchKeyFunct);
-    glutTimerFunc(TIMER_DELAY, timerFunct, 0);
+    glutReshapeFunc(myReshape);
+    glutMouseFunc(myMouse);
+    glutTimerFunc(TIMER_DELAY, myTimeOut, 0);
+    myInit();
     glutMainLoop();
     return 0;
-
 }
