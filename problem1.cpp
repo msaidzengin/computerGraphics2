@@ -3,27 +3,26 @@
 #include <math.h>
 #include <GL/glut.h>
 #include <iostream>
-using namespace std;
 
 GLint TIMER_DELAY = 10;
 GLfloat RED_RGB[] = { 1, 0, 0 };
 GLfloat BLUE_RGB[] = { 0, 0, 1 };
 GLfloat WHITE_RGB[] = { 1, 1, 1 };
 GLfloat BLACK_RGB[] = { 0, 0, 0 };
-GLfloat Lshape[7][2] = {
-    {0.00, 0.00},  //to do  - size'a gore ayarla.
-    {0.25, 0.00},
-    {0.25, 0.10},
-    {0.10, 0.10},
-    {0.10, 0.40},
-    {0.00, 0.40},
-    {0.15, 0.00} // Reference point
-};
 bool singleRotationMode = false;
 bool animationMode = false;
 int width = 500;
 int height = 500;
-float size = 1;
+float size = 0.2;
+GLfloat Lshape[7][2] = {
+    {0.00, 0.00},
+    {size / 3 * 2, 0.00},
+    {size / 3 * 2, size / 3},
+    {size / 3, size / 3},
+    {size / 3, size},
+    {0.00, size},
+    {size / 3, 0.00} // Reference point
+};
 
 void myInit() {
     glClearColor(0, 0, 0, 1);
@@ -55,23 +54,23 @@ void drawL() {
 
 void setVerticesAgain(int degree) {
 
-    Lshape[0][0] = Lshape[6][0] - 0.15;
+    Lshape[0][0] = Lshape[6][0] - size / 3;
     Lshape[0][1] = Lshape[6][1];
 
-    Lshape[1][0] = Lshape[6][0] + 0.15;
+    Lshape[1][0] = Lshape[6][0] + size / 3;
     Lshape[1][1] = Lshape[6][1];
 
-    Lshape[2][0] = Lshape[6][0] + 0.15;
-    Lshape[2][1] = Lshape[6][1] + 0.10;
+    Lshape[2][0] = Lshape[6][0] + size / 3;
+    Lshape[2][1] = Lshape[6][1] + size / 3;
 
     Lshape[3][0] = Lshape[6][0];
-    Lshape[3][1] = Lshape[6][1] + 0.10;
+    Lshape[3][1] = Lshape[6][1] + size / 3;
 
     Lshape[4][0] = Lshape[6][0];
-    Lshape[4][1] = Lshape[6][1] + 0.40;
+    Lshape[4][1] = Lshape[6][1] + size;
 
-    Lshape[5][0] = Lshape[6][0] - 0.15;
-    Lshape[5][1] = Lshape[6][1] + 0.40;
+    Lshape[5][0] = Lshape[6][0] - size / 3;
+    Lshape[5][1] = Lshape[6][1] + size;
 
 }
 
