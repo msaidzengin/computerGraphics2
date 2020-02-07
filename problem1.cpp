@@ -52,7 +52,7 @@ void drawL() {
     glEnd();
 }
 
-void setVerticesAgain(int degree) {
+void setVerticesAgain(GLfloat degree) {
 
     Lshape[0][0] = Lshape[6][0] - size / 3;
     Lshape[0][1] = Lshape[6][1];
@@ -72,9 +72,12 @@ void setVerticesAgain(int degree) {
     Lshape[5][0] = Lshape[6][0] - size / 3;
     Lshape[5][1] = Lshape[6][1] + size;
 
+    GLfloat thetar;
+    thetar = degree * (2 * 3.14159) / 360.0;
+
 }
 
-void drawLAt(GLfloat x, GLfloat y, int degree) {
+void drawLAt(GLfloat x, GLfloat y, GLfloat degree) {
 
     Lshape[6][0] = x;
     Lshape[6][1] = y;
