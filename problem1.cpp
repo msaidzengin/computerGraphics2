@@ -54,26 +54,30 @@ void drawL() {
 
 void setVerticesAgain(GLfloat degree) {
 
-    Lshape[0][0] = Lshape[6][0] - size / 3;
-    Lshape[0][1] = Lshape[6][1];
-
-    Lshape[1][0] = Lshape[6][0] + size / 3;
-    Lshape[1][1] = Lshape[6][1];
-
-    Lshape[2][0] = Lshape[6][0] + size / 3;
-    Lshape[2][1] = Lshape[6][1] + size / 3;
-
-    Lshape[3][0] = Lshape[6][0];
-    Lshape[3][1] = Lshape[6][1] + size / 3;
-
-    Lshape[4][0] = Lshape[6][0];
-    Lshape[4][1] = Lshape[6][1] + size;
-
-    Lshape[5][0] = Lshape[6][0] - size / 3;
-    Lshape[5][1] = Lshape[6][1] + size;
-
     GLfloat thetar;
-    thetar = degree * (2 * 3.14159) / 360.0;
+    thetar = degree * (size / 2 * 3.14159) / 360.0;
+    std::cout << sin(thetar) << "\n";
+    std::cout << cos(thetar) << "\n";
+
+    Lshape[0][0] = Lshape[6][0] - size / 3 + sin(thetar);
+    Lshape[0][1] = Lshape[6][1] - sin(thetar);
+
+    Lshape[1][0] = Lshape[6][0] + size / 3 + sin(thetar);
+    Lshape[1][1] = Lshape[6][1] + sin(thetar);
+
+    Lshape[2][0] = Lshape[6][0] + size / 3 + sin(thetar);
+    Lshape[2][1] = Lshape[6][1] + size / 3 - sin(thetar);
+
+    Lshape[3][0] = Lshape[6][0] + sin(thetar);
+    Lshape[3][1] = Lshape[6][1] + size / 3 - sin(thetar);
+
+    Lshape[4][0] = Lshape[6][0] - sin(thetar);
+    Lshape[4][1] = Lshape[6][1] + size + sin(thetar);
+
+    Lshape[5][0] = Lshape[6][0] - size / 3 - sin(thetar);
+    Lshape[5][1] = Lshape[6][1] + size - sin(thetar);
+
+
 
 }
 
@@ -163,7 +167,7 @@ void myTimeOut(int id) {
 int main(int argc, char** argv) {
 
     glutInit(&argc, argv);
-    glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(width, height);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Problem 1");
