@@ -13,15 +13,15 @@ bool singleRotationMode = false;
 bool animationMode = false;
 int width = 500;
 int height = 500;
-float size = 0.2;
+float size = 0.1;
 GLfloat Lshape[7][2] = {
-    {0.00, 0.00},
-    {size / 3 * 2, 0.00},
-    {size / 3 * 2, size / 3},
-    {size / 3, size / 3},
-    {size / 3, size},
-    {0.00, size},
-    {size / 3, 0.00} // Reference point
+    {0, 0},
+    {size * 2, 0},
+    {size * 2, size},
+    {size, size},
+    {size, size * 3},
+    {0, size * 3},
+    {size, 0} // Reference point
 };
 
 void myInit() {
@@ -54,30 +54,26 @@ void drawL() {
 
 void setVerticesAgain(GLfloat degree) {
 
-    GLfloat thetar;
-    thetar = degree * (size / 2 * 3.14159) / 360.0;
-    std::cout << sin(thetar) << "\n";
-    std::cout << cos(thetar) << "\n";
+    Lshape[0][0] = Lshape[6][0] + ((size) * cos((degree + 180) * 3.14159 / 180));
+    Lshape[0][1] = Lshape[6][1] + ((size) * sin((degree + 180) * 3.14159 / 180));
 
-    Lshape[0][0] = Lshape[6][0] - size / 3 + sin(thetar);
-    Lshape[0][1] = Lshape[6][1] - sin(thetar);
+    Lshape[1][0] = Lshape[6][0] + ((size) * cos((degree) * 3.14159 / 180));
+    Lshape[1][1] = Lshape[6][1] + ((size) * sin((degree) * 3.14159 / 180));
 
-    Lshape[1][0] = Lshape[6][0] + size / 3 + sin(thetar);
-    Lshape[1][1] = Lshape[6][1] + sin(thetar);
+    Lshape[2][0] = Lshape[6][0] + ((size * sqrt(2)) * cos((degree + 45) * 3.14159 / 180));
+    Lshape[2][1] = Lshape[6][1] + ((size * sqrt(2)) * sin((degree + 45) * 3.14159 / 180));
 
-    Lshape[2][0] = Lshape[6][0] + size / 3 + sin(thetar);
-    Lshape[2][1] = Lshape[6][1] + size / 3 - sin(thetar);
+    Lshape[3][0] = Lshape[6][0] + ((size) * cos((degree + 90) * 3.14159 / 180));
+    Lshape[3][1] = Lshape[6][1] + ((size) * sin((degree + 90) * 3.14159 / 180));
 
-    Lshape[3][0] = Lshape[6][0] + sin(thetar);
-    Lshape[3][1] = Lshape[6][1] + size / 3 - sin(thetar);
+    Lshape[4][0] = Lshape[6][0] + ((size * 3) * cos((degree + 90) * 3.14159 / 180));
+    Lshape[4][1] = Lshape[6][1] + ((size * 3) * sin((degree + 90) * 3.14159 / 180));
 
-    Lshape[4][0] = Lshape[6][0] - sin(thetar);
-    Lshape[4][1] = Lshape[6][1] + size + sin(thetar);
+    Lshape[5][0] = Lshape[6][0] + ((size * sqrt(10)) * cos((180 - atan(3) + degree) * 3.14159 / 180));
+    Lshape[5][1] = Lshape[6][1] + ((size * sqrt(10)) * sin((180 - atan(3) + degree) * 3.14159 / 180));
 
-    Lshape[5][0] = Lshape[6][0] - size / 3 - sin(thetar);
-    Lshape[5][1] = Lshape[6][1] + size - sin(thetar);
-
-
+    std::cout << ((size * sqrt(10)) * cos((180 - atan(3) + degree) * 3.14159 / 180)) << "\n";
+    std::cout << ((size * sqrt(10)) * sin((180 - atan(3) + degree) * 3.14159 / 180)) << "\n";
 
 }
 
