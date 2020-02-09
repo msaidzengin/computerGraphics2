@@ -54,26 +54,26 @@ void drawL() {
 
 void setVerticesAgain(GLfloat degree) {
 
-    Lshape[0][0] = Lshape[6][0] + ((size) * cos((degree + 180) * 3.14159 / 180));
-    Lshape[0][1] = Lshape[6][1] + ((size) * sin((degree + 180) * 3.14159 / 180));
+    Lshape[0][0] = Lshape[6][0] + ((size)*cos((degree + 180) * 3.14159 / 180));
+    Lshape[0][1] = Lshape[6][1] + ((size)*sin((degree + 180) * 3.14159 / 180));
 
-    Lshape[1][0] = Lshape[6][0] + ((size) * cos((degree) * 3.14159 / 180));
-    Lshape[1][1] = Lshape[6][1] + ((size) * sin((degree) * 3.14159 / 180));
+    Lshape[1][0] = Lshape[6][0] + ((size)*cos((degree) * 3.14159 / 180));
+    Lshape[1][1] = Lshape[6][1] + ((size)*sin((degree) * 3.14159 / 180));
 
     Lshape[2][0] = Lshape[6][0] + ((size * sqrt(2)) * cos((degree + 45) * 3.14159 / 180));
     Lshape[2][1] = Lshape[6][1] + ((size * sqrt(2)) * sin((degree + 45) * 3.14159 / 180));
 
-    Lshape[3][0] = Lshape[6][0] + ((size) * cos((degree + 90) * 3.14159 / 180));
-    Lshape[3][1] = Lshape[6][1] + ((size) * sin((degree + 90) * 3.14159 / 180));
+    Lshape[3][0] = Lshape[6][0] + ((size)*cos((degree + 90) * 3.14159 / 180));
+    Lshape[3][1] = Lshape[6][1] + ((size)*sin((degree + 90) * 3.14159 / 180));
 
     Lshape[4][0] = Lshape[6][0] + ((size * 3) * cos((degree + 90) * 3.14159 / 180));
     Lshape[4][1] = Lshape[6][1] + ((size * 3) * sin((degree + 90) * 3.14159 / 180));
 
-    Lshape[5][0] = Lshape[6][0] + ((size * sqrt(10)) * cos((180 - atan(3) + degree) * 3.14159 / 180));
-    Lshape[5][1] = Lshape[6][1] + ((size * sqrt(10)) * sin((180 - atan(3) + degree) * 3.14159 / 180));
+    Lshape[5][0] = Lshape[6][0] + ((size * sqrt(10)) * cos((atan(1/3) + 90)) * 3.14159 / 180);
+    Lshape[5][1] = Lshape[6][1] + ((size * sqrt(10)) * sin((atan(1/3) + 90)) * 3.14159 / 180);
 
-    std::cout << ((size * sqrt(10)) * cos((180 - atan(3) + degree) * 3.14159 / 180)) << "\n";
-    std::cout << ((size * sqrt(10)) * sin((180 - atan(3) + degree) * 3.14159 / 180)) << "\n";
+    std::cout << Lshape[6][0] << " , " << Lshape[6][1] << "\n";
+    std::cout << ((size * sqrt(10)) * cos((atan(1 / 3) + 90) * 3.14159 / 180)) << " ," << ((size * sqrt(10)) * sin((atan(1 / 3) + 90) * 3.14159 / 180)) <<  "\n";
 
 }
 
