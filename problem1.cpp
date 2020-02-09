@@ -15,6 +15,7 @@ int width = 500;
 int height = 500;
 float size = 0.1;
 float degree = 0;
+float r = 0;
 GLfloat Lshape[7][2] = {
     {0, 0},
     {size * 2, 0},
@@ -75,13 +76,17 @@ void setVerticesAgain(GLfloat degree) {
 
 }
 
+void transformReferencePoint() {
+    Lshape[6][0] = (r * sin((90) * 3.14159 / 180));
+    Lshape[6][1] = (r * cos((90) * 3.14159 / 180));
+}
+
 void drawLAt(GLfloat x, GLfloat y) {
 
     Lshape[6][0] = x;
     Lshape[6][1] = y;
 
     setVerticesAgain(degree);
-
 }
 
 void myDisplay() {
