@@ -14,6 +14,7 @@ bool animationMode = false;
 int width = 500;
 int height = 500;
 float size = 0.1;
+float degree = 0;
 GLfloat Lshape[7][2] = {
     {0, 0},
     {size * 2, 0},
@@ -54,8 +55,6 @@ void drawL() {
 
 void setVerticesAgain(GLfloat degree) {
 
-    degree = 210;
-
     Lshape[0][0] = Lshape[6][0] + ((size) * cos((degree + 180) * 3.14159 / 180));
     Lshape[0][1] = Lshape[6][1] + ((size) * sin((degree + 180) * 3.14159 / 180));
 
@@ -76,7 +75,7 @@ void setVerticesAgain(GLfloat degree) {
 
 }
 
-void drawLAt(GLfloat x, GLfloat y, GLfloat degree) {
+void drawLAt(GLfloat x, GLfloat y) {
 
     Lshape[6][0] = x;
     Lshape[6][1] = y;
@@ -98,6 +97,13 @@ void keyboardFunct(unsigned char c, int x, int y) {
     case 'q':
     case 'Q':
         exit(0);
+        break;
+    case 'r':
+    case 'R':
+        if (singleRotationMode) {
+            degree += 5;
+            setVerticesAgain(degree);
+        }
         break;
     case 'a':
         animationMode = true;
@@ -124,18 +130,6 @@ void catchKeyFunct(int key, int x, int y) {
     }
 }
 
-void myMouse(int b, int s, int x, int y) {
-
-    switch (b) {
-    case GLUT_LEFT_BUTTON:
-        if (s == GLUT_DOWN) {
-
-        }
-        else if (s == GLUT_UP) {
-
-        }
-    }
-}
 void mouseFunct(int b, int s, int x, int y) {
 
     if (s == GLUT_DOWN) {
@@ -143,12 +137,16 @@ void mouseFunct(int b, int s, int x, int y) {
 
         }
         if (b == GLUT_RIGHT_BUTTON) {
-            singleRotationMode = true;
-            GLfloat mouseX = 1.0 * x / width;
-            GLfloat mouseY = 1.0 * (height - y) / height;
+            if (singleRotationMode) {
+                singleRotationMode = false;
+            }
+            else {
+                singleRotationMode = true;
+                GLfloat mouseX = 1.0 * x / width;
+                GLfloat mouseY = 1.0 * (height - y) / height;
 
-            drawLAt(mouseX, mouseY, 30);
-
+                drawLAt(mouseX, mouseY);
+            }
         }
     }
 }
