@@ -13,23 +13,22 @@ bool singleRotationMode = false;
 bool animationMode = false;
 int width = 500;
 int height = 500;
-float size = 0.1;
+float size = 0.05;
 float degree = 0;
 float r = 0;
 GLfloat Lshape[7][2] = {
     {0, 0},
-    {size * 2, 0},
-    {size * 2, size},
-    {size, size},
-    {size, size * 3},
-    {0, size * 3},
-    {size, 0} // Reference point
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0} // Reference point
 };
 
 void myInit() {
     glClearColor(0, 0, 0, 1);
     glShadeModel(GL_SMOOTH);
-
 }
 
 void myReshape(int winWidth, int winHeight) {
@@ -54,7 +53,7 @@ void drawL() {
     glEnd();
 }
 
-void setVerticesAgain(GLfloat degree) {
+void setVerticesAgain() {
 
     Lshape[0][0] = Lshape[6][0] + ((size) * cos((degree + 180) * 3.14159 / 180));
     Lshape[0][1] = Lshape[6][1] + ((size) * sin((degree + 180) * 3.14159 / 180));
@@ -81,15 +80,17 @@ void transformReferencePoint() {
     Lshape[6][1] = (r * cos((90) * 3.14159 / 180));
 }
 
+
 void drawLAt(GLfloat x, GLfloat y) {
 
     Lshape[6][0] = x;
     Lshape[6][1] = y;
 
-    setVerticesAgain(degree);
+    setVerticesAgain();
 }
 
 void myDisplay() {
+    
     drawL();
     glFlush();
     glutSwapBuffers();
@@ -107,7 +108,7 @@ void keyboardFunct(unsigned char c, int x, int y) {
     case 'R':
         if (singleRotationMode) {
             degree += 5;
-            setVerticesAgain(degree);
+            setVerticesAgain();
         }
         break;
     case 'a':
@@ -150,6 +151,7 @@ void mouseFunct(int b, int s, int x, int y) {
                 GLfloat mouseX = 1.0 * x / width;
                 GLfloat mouseY = 1.0 * (height - y) / height;
 
+                degree = 30;
                 drawLAt(mouseX, mouseY);
             }
         }
@@ -164,6 +166,7 @@ void myTimeOut(int id) {
 
 int main(int argc, char** argv) {
 
+    drawLAt(0.5 + size, 0.5);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(width, height);
