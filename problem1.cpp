@@ -15,7 +15,8 @@ int width = 500;
 int height = 500;
 float size = 0.05;
 float degree = 0;
-float r = 0;
+float r = 0.1;
+float dg = 0;
 GLfloat Lshape[7][2] = {
     {0, 0},
     {0, 0},
@@ -75,11 +76,18 @@ void setVerticesAgain() {
 
 }
 
-void transformReferencePoint() {
-    Lshape[6][0] = (r * sin((90) * 3.14159 / 180));
-    Lshape[6][1] = (r * cos((90) * 3.14159 / 180));
-}
+void rollingL(float r, int n) {
 
+
+    Lshape[6][0] =  0.5 + r * cos((dg) * 3.14159 / 180);
+    Lshape[6][1] =  0.5 + r * sin((dg) * 3.14159 / 180);
+
+    std::cout << Lshape[6][0] << " , " << Lshape[6][1] << "\n";
+ 
+    degree = dg - 90;
+    setVerticesAgain();
+
+}
 
 void drawLAt(GLfloat x, GLfloat y) {
 
@@ -91,6 +99,8 @@ void drawLAt(GLfloat x, GLfloat y) {
 
 void myDisplay() {
     
+    rollingL(0.1, 1);
+    dg += 1;
     drawL();
     glFlush();
     glutSwapBuffers();
@@ -113,6 +123,7 @@ void keyboardFunct(unsigned char c, int x, int y) {
         break;
     case 'a':
         animationMode = true;
+        rollingL(0.1, 1);
         break;
     default:
         break;
