@@ -17,6 +17,7 @@ float size = 0.05;
 float degree = 0;
 float r = 0.1;
 float dg = 0;
+int n = 8;
 GLfloat Lshape[7][2] = {
     {0, 0},
     {0, 0},
@@ -52,21 +53,38 @@ void drawL() {
     for (int i = 0; i < 6; i++)
         glVertex2fv(Lshape[i]);
     glEnd();
+
+    GLfloat x;
+    GLfloat y;
+    glColor3fv(RED_RGB);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 6; i++) {
+        if (Lshape[i][0] < 0.5) x = (0.5 + (0.5 - Lshape[i][0]));
+        else x = (0.5 - (Lshape[i][0] - 0.5));
+
+        if (Lshape[i][1] < 0.5) y = (0.5 + (0.5 - Lshape[i][1]));
+        else y = (0.5 - (Lshape[i][1] - 0.5));
+
+        glVertex2f(x, y);
+    }
+    glEnd();
+    
+    
 }
 
 void setVerticesAgain() {
 
-    Lshape[0][0] = Lshape[6][0] + ((size) * cos((degree + 180) * 3.14159 / 180));
-    Lshape[0][1] = Lshape[6][1] + ((size) * sin((degree + 180) * 3.14159 / 180));
+    Lshape[0][0] = Lshape[6][0] + ((size)*cos((degree + 180) * 3.14159 / 180));
+    Lshape[0][1] = Lshape[6][1] + ((size)*sin((degree + 180) * 3.14159 / 180));
 
-    Lshape[1][0] = Lshape[6][0] + ((size) * cos((degree) * 3.14159 / 180));
-    Lshape[1][1] = Lshape[6][1] + ((size) * sin((degree) * 3.14159 / 180));
+    Lshape[1][0] = Lshape[6][0] + ((size)*cos((degree) * 3.14159 / 180));
+    Lshape[1][1] = Lshape[6][1] + ((size)*sin((degree) * 3.14159 / 180));
 
     Lshape[2][0] = Lshape[6][0] + ((size * sqrt(2)) * cos((degree + 45) * 3.14159 / 180));
     Lshape[2][1] = Lshape[6][1] + ((size * sqrt(2)) * sin((degree + 45) * 3.14159 / 180));
 
-    Lshape[3][0] = Lshape[6][0] + ((size) * cos((degree + 90) * 3.14159 / 180));
-    Lshape[3][1] = Lshape[6][1] + ((size) * sin((degree + 90) * 3.14159 / 180));
+    Lshape[3][0] = Lshape[6][0] + ((size)*cos((degree + 90) * 3.14159 / 180));
+    Lshape[3][1] = Lshape[6][1] + ((size)*sin((degree + 90) * 3.14159 / 180));
 
     Lshape[4][0] = Lshape[6][0] + ((size * 3) * cos((degree + 90) * 3.14159 / 180));
     Lshape[4][1] = Lshape[6][1] + ((size * 3) * sin((degree + 90) * 3.14159 / 180));
@@ -79,11 +97,11 @@ void setVerticesAgain() {
 void rollingL(float r, int n) {
 
 
-    Lshape[6][0] =  0.5 + r * cos((dg) * 3.14159 / 180);
-    Lshape[6][1] =  0.5 + r * sin((dg) * 3.14159 / 180);
+    Lshape[6][0] = 0.5 + r * cos((dg) * 3.14159 / 180);
+    Lshape[6][1] = 0.5 + r * sin((dg) * 3.14159 / 180);
 
     std::cout << Lshape[6][0] << " , " << Lshape[6][1] << "\n";
- 
+
     degree = dg - 90;
     setVerticesAgain();
 
@@ -98,8 +116,8 @@ void drawLAt(GLfloat x, GLfloat y) {
 }
 
 void myDisplay() {
-    
-    rollingL(0.1, 1);
+
+    rollingL(r, 1);
     dg += 1;
     drawL();
     glFlush();
