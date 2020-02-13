@@ -104,7 +104,7 @@ void drawFace() {
     glColor3fv(BLACK_RGB);
     glBegin(GL_POINTS);
     for (float i = 2; i < 4.22; i += 0.001)
-        glVertex2f((sin(i) * radius) + pirateFace[0][0], (cos(i) * radius) + pirateFace[0][1] - size / 6.6666);
+        glVertex2f((sin(i + degree / 58.0) * radius) + pirateFace[0][0], (cos(i + degree / 58.0) * radius) + pirateFace[0][1]);
     glEnd();
 
     float ax1 = pirateFace[0][0] + ((size / 3.3333) * cos((-1 * degree + 29.982) * 3.14159 / 180));
