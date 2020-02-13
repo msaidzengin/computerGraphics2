@@ -93,15 +93,14 @@ void drawFace() {
 
 
     radius = size / 2;
-    glColor3fv(BLACK_RGB);
+    glColor3fv(RED_RGB);
     glBegin(GL_POINTS);
     for (float i = 2; i < 4.22; i += 0.001)
         glVertex2f((sin(i) * radius) + pirateFace[0][0], (cos(i) * radius) + pirateFace[0][1] - size / 6.6666);
     glEnd();
 
     glRectf((pirateFace[0][0] + size / 2.5) - 0.028, (pirateFace[0][1] + size / 6.6666), (pirateFace[0][0] + size / 2.5) + 0.028, (pirateFace[0][1] + size / 6.6666) + 0.07);
-    glRectf(pirateFace[0][0] - 0.172, pirateFace[0][1] + 0.10, pirateFace[0][0] + 0.172, pirateFace[0][1] + 0.11);
-
+    glRectf(size * sin(60 * 3.14159 / 180) + pirateFace[0][0], size * cos(60 * 3.14159 / 180) + pirateFace[0][1], size * sin(300 * 3.14159 / 180) + pirateFace[0][0], size * cos(300 * 3.14159 / 180) + pirateFace[0][1] + size / 20);
 }
 
 void myDisplay() {
