@@ -16,7 +16,7 @@ GLfloat pirateFace[1][2] = {
 };
 float size = 0.2;
 float halfSize = size / 2;
-int degree = 90;
+int degree = 0;
 bool reduceSize = false;
 bool rotate = false;
 bool finish = false;
@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(width, height);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow("Problem 1");
+    glutCreateWindow("Problem 2");
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(keyboardFunct);
     glutReshapeFunc(myReshape);
