@@ -15,6 +15,11 @@ GLfloat pirateFace[1][2] = {
     {0.5, 0.5}
 };
 float size = 0.2;
+float halfSize = size / 2;
+int degree = 90;
+bool reduceSize = false;
+bool rotate = false;
+bool finish = false;
 
 void myInit() {
     glClearColor(0, 0, 0, 1);
@@ -103,7 +108,22 @@ void drawFace() {
     glRectf(size * sin(60 * 3.14159 / 180) + pirateFace[0][0], size * cos(60 * 3.14159 / 180) + pirateFace[0][1], size * sin(300 * 3.14159 / 180) + pirateFace[0][0], size * cos(300 * 3.14159 / 180) + pirateFace[0][1] + size / 20);
 }
 
+void rotateFace() {
+
+}
+
 void myDisplay() {
+
+    if (reduceSize) {
+        if (size > halfSize) size -= 0.001;
+        else if (pirateFace[0][0] > 0.1) pirateFace[0][0] -= 0.002;
+        else rotate = true;
+    }
+    if (rotate) rotateFace();
+    else finish = true;
+    if (finish) {
+        if (pirateFace[0][0] > 0.5) pirateFace[0][0] -= 0.001;
+    }
 
     drawFace();
     glFlush();
@@ -121,6 +141,7 @@ void keyboardFunct(unsigned char c, int x, int y) {
     case 'r':
         break;
     case 'a':
+        reduceSize = true;
         break;
     default:
         break;
