@@ -11,12 +11,10 @@ GLfloat WHITE_RGB[] = { 1, 1, 1 };
 GLfloat BLACK_RGB[] = { 0, 0, 0 };
 int width = 500;
 int height = 500;
-GLfloat pirateFace[4][2] = {
-    {0.5, 0.5}, //center
-    {0.58, 0.53}, // right eye
-    {0.42, 0.53},  //left eye 
-    {0.5, 0.47} // mouth
+GLfloat pirateFace[1][2] = {
+    {0.5, 0.5}
 };
+float size = 0.2;
 
 void myInit() {
     glClearColor(0, 0, 0, 1);
@@ -39,7 +37,7 @@ void drawFace() {
 
     float x1, y1, x2, y2;
     float angle;
-    double radius = 0.2;
+    double radius = size;
 
     x1 = pirateFace[0][0];
     y1 = pirateFace[0][1];
@@ -56,10 +54,10 @@ void drawFace() {
     glEnd();
 
 
-    radius = 0.03;
+    radius = size / 6.6666;
 
-    x1 = pirateFace[1][0];
-    y1 = pirateFace[1][1];
+    x1 = pirateFace[0][0] + size / 2.5;
+    y1 = pirateFace[0][1] + size / 6.6666;
 
     glColor3fv(BLACK_RGB);
     glBegin(GL_TRIANGLE_FAN);
@@ -71,8 +69,8 @@ void drawFace() {
     }
     glEnd();
 
-    x1 = pirateFace[2][0];
-    y1 = pirateFace[2][1];
+    x1 = pirateFace[0][0] - size / 2.5;
+    y1 = pirateFace[0][1] + size / 6.6666;
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x1, y1);
     for (angle = 1.0f; angle < 361.0f; angle += 0.2) {
@@ -82,7 +80,7 @@ void drawFace() {
     }
     glEnd();
 
-    radius = 0.027;
+    radius = size / 7.4074;
     glColor3fv(WHITE_RGB);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x1, y1);
@@ -94,15 +92,14 @@ void drawFace() {
     glEnd();
 
 
-    radius = 0.1;
+    radius = size / 2;
     glColor3fv(BLACK_RGB);
-    float twoPI = 2 * 3.14159;
     glBegin(GL_POINTS);
     for (float i = 2; i < 4.22; i += 0.001)
-        glVertex2f((sin(i) * radius) + pirateFace[3][0], (cos(i) * radius) + pirateFace[3][1]);
+        glVertex2f((sin(i) * radius) + pirateFace[0][0], (cos(i) * radius) + pirateFace[0][1] - size / 6.6666);
     glEnd();
 
-    glRectf(pirateFace[1][0] - 0.028, pirateFace[1][1], pirateFace[1][0] + 0.028, pirateFace[1][1] + 0.07);
+    glRectf((pirateFace[0][0] + size / 2.5) - 0.028, (pirateFace[0][1] + size / 6.6666), (pirateFace[0][0] + size / 2.5) + 0.028, (pirateFace[0][1] + size / 6.6666) + 0.07);
     glRectf(pirateFace[0][0] - 0.172, pirateFace[0][1] + 0.10, pirateFace[0][0] + 0.172, pirateFace[0][1] + 0.11);
 
 }
