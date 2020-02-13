@@ -17,6 +17,7 @@ GLfloat pirateFace[1][2] = {
 float size = 0.2;
 float halfSize = size / 2;
 int degree = 0;
+int secDeg = 0;
 bool reduceSize = false;
 bool rotate = false;
 bool finish = false;
@@ -74,6 +75,7 @@ void drawFace() {
     }
     glEnd();
 
+
     x1 = pirateFace[0][0] - ((size / 2.34192) * sin((degree + 110.556) * 3.14159 / 180));
     y1 = pirateFace[0][1] - ((size / 2.34192) * cos((degree + 110.556) * 3.14159 / 180));
 
@@ -105,8 +107,30 @@ void drawFace() {
         glVertex2f((sin(i) * radius) + pirateFace[0][0], (cos(i) * radius) + pirateFace[0][1] - size / 6.6666);
     glEnd();
 
-    glRectf((pirateFace[0][0] + size / 2.5) - size / 7.14285, (pirateFace[0][1] + size / 6.6666), (pirateFace[0][0] + size / 2.5) + size / 7.14285, (pirateFace[0][1] + size / 6.6666) + size / 2.85714);
-    glRectf(size * sin(60 * 3.14159 / 180) + pirateFace[0][0], size * cos(60 * 3.14159 / 180) + pirateFace[0][1], size * sin(300 * 3.14159 / 180) + pirateFace[0][0], size * cos(300 * 3.14159 / 180) + pirateFace[0][1] + size / 20);
+    float ax1 = pirateFace[0][0] + ((size / 3.3333) * cos((-1 * degree + 29.982) * 3.14159 / 180));
+    float ay1 = pirateFace[0][1] + ((size / 3.3333) * sin((-1 * degree + 29.982) * 3.14159 / 180));
+
+    float bx1 = pirateFace[0][0] + ((size / 1.7857) * cos((-1 * degree + 15.524) * 3.14159 / 180));
+    float by1 = pirateFace[0][1] + ((size / 1.7857) * sin((-1 * degree + 15.524) * 3.14159 / 180));
+
+    float cx1 = pirateFace[0][0] + ((size / 1.36054) * cos((-1 * degree + 42.797) * 3.14159 / 180));
+    float cy1 = pirateFace[0][1] + ((size / 1.36054) * sin((-1 * degree + 42.797) * 3.14159 / 180));
+
+    float dx1 = pirateFace[0][0] + ((size / 1.7857) * cos((-1 * degree + 62.526) * 3.14159 / 180));
+    float dy1 = pirateFace[0][1] + ((size / 1.7857) * sin((-1 * degree + 62.526) * 3.14159 / 180));
+
+    glBegin(GL_POLYGON);
+    glVertex2f(ax1, ay1);
+    glVertex2f(bx1, by1);
+    glVertex2f(cx1, cy1);
+    glVertex2f(dx1, dy1);
+    glEnd();
+
+    glLineWidth(size * 25);
+    glBegin(GL_LINES);
+    glVertex2f(size * sin((degree + 60) * 3.14159 / 180) + pirateFace[0][0], size * cos((degree + 60) * 3.14159 / 180) + pirateFace[0][1]);
+    glVertex2f(size * sin((degree + 300) * 3.14159 / 180) + pirateFace[0][0], size * cos((degree + 300) * 3.14159 / 180) + pirateFace[0][1]);
+    glEnd();
 }
 
 void myDisplay() {
