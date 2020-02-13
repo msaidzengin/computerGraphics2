@@ -61,8 +61,8 @@ void drawFace() {
 
     radius = size / 6.6666;
 
-    x1 = pirateFace[0][0] + size / 2.5;
-    y1 = pirateFace[0][1] + size / 6.6666;
+    x1 = pirateFace[0][0] + ((size / 2.34192) * sin((degree + 69.444) * 3.14159 / 180));
+    y1 = pirateFace[0][1] + ((size / 2.34192) * cos((degree + 69.444) * 3.14159 / 180));
 
     glColor3fv(BLACK_RGB);
     glBegin(GL_TRIANGLE_FAN);
@@ -74,8 +74,9 @@ void drawFace() {
     }
     glEnd();
 
-    x1 = pirateFace[0][0] - size / 2.5;
-    y1 = pirateFace[0][1] + size / 6.6666;
+    x1 = pirateFace[0][0] - ((size / 2.34192) * sin((degree + 110.556) * 3.14159 / 180));
+    y1 = pirateFace[0][1] - ((size / 2.34192) * cos((degree + 110.556) * 3.14159 / 180));
+
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x1, y1);
     for (angle = 1.0f; angle < 361.0f; angle += 0.2) {
@@ -108,10 +109,6 @@ void drawFace() {
     glRectf(size * sin(60 * 3.14159 / 180) + pirateFace[0][0], size * cos(60 * 3.14159 / 180) + pirateFace[0][1], size * sin(300 * 3.14159 / 180) + pirateFace[0][0], size * cos(300 * 3.14159 / 180) + pirateFace[0][1] + size / 20);
 }
 
-void rotateFace() {
-
-}
-
 void myDisplay() {
 
     if (reduceSize) {
@@ -119,10 +116,18 @@ void myDisplay() {
         else if (pirateFace[0][0] > 0.1) pirateFace[0][0] -= 0.002;
         else rotate = true;
     }
-    if (rotate) rotateFace();
-    else finish = true;
+    if (rotate) {
+        reduceSize = false;
+        pirateFace[0][0] += 0.0015;
+        if (degree < 360) degree += 1;
+        else finish = true;
+    }
     if (finish) {
+        rotate = false;
+        degree = 0;
         if (pirateFace[0][0] > 0.5) pirateFace[0][0] -= 0.001;
+        else if (size < halfSize * 2) size += 0.001;
+        else finish = false;
     }
 
     drawFace();
