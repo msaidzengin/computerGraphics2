@@ -11,14 +11,11 @@ GLfloat WHITE_RGB[] = { 1, 1, 1 };
 GLfloat BLACK_RGB[] = { 0, 0, 0 };
 int width = 500;
 int height = 500;
-GLfloat Lshape[7][2] = {
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {0, 0} // Reference point
+GLfloat pirateFace[4][2] = {
+    {0.5, 0.5}, //center
+    {0.58, 0.53}, // right eye
+    {0.42, 0.53},  //left eye 
+    {0.5, 0.47} // mouth
 };
 
 void myInit() {
@@ -38,19 +35,81 @@ void myReshape(int winWidth, int winHeight) {
 
 }
 
-void drawL() {
+void drawFace() {
+
+    float x1, y1, x2, y2;
+    float angle;
+    double radius = 0.2;
+
+    x1 = pirateFace[0][0];
+    y1 = pirateFace[0][1];
 
     glClear(GL_COLOR_BUFFER_BIT);
-    glColor3fv(RED_RGB);
-    glBegin(GL_POLYGON);
-    for (int i = 0; i < 6; i++)
-        glVertex2fv(Lshape[i]);
+    glColor3fv(WHITE_RGB);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x1, y1);
+    for (angle = 1.0f; angle < 361.0f; angle += 0.2) {
+        x2 = x1 + sin(angle) * radius;
+        y2 = y1 + cos(angle) * radius;
+        glVertex2f(x2, y2);
+    }
     glEnd();
+
+
+    radius = 0.03;
+
+    x1 = pirateFace[1][0];
+    y1 = pirateFace[1][1];
+
+    glColor3fv(BLACK_RGB);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x1, y1);
+    for (angle = 1.0f; angle < 361.0f; angle += 0.2) {
+        x2 = x1 + sin(angle) * radius;
+        y2 = y1 + cos(angle) * radius;
+        glVertex2f(x2, y2);
+    }
+    glEnd();
+
+    x1 = pirateFace[2][0];
+    y1 = pirateFace[2][1];
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x1, y1);
+    for (angle = 1.0f; angle < 361.0f; angle += 0.2) {
+        x2 = x1 + sin(angle) * radius;
+        y2 = y1 + cos(angle) * radius;
+        glVertex2f(x2, y2);
+    }
+    glEnd();
+
+    radius = 0.027;
+    glColor3fv(WHITE_RGB);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x1, y1);
+    for (angle = 1.0f; angle < 361.0f; angle += 0.2) {
+        x2 = x1 + sin(angle) * radius;
+        y2 = y1 + cos(angle) * radius;
+        glVertex2f(x2, y2);
+    }
+    glEnd();
+
+
+    radius = 0.1;
+    glColor3fv(BLACK_RGB);
+    float twoPI = 2 * 3.14159;
+    glBegin(GL_POINTS);
+    for (float i = 2; i < 4.22; i += 0.001)
+        glVertex2f((sin(i) * radius) + pirateFace[3][0], (cos(i) * radius) + pirateFace[3][1]);
+    glEnd();
+
+    glRectf(pirateFace[1][0] - 0.028, pirateFace[1][1], pirateFace[1][0] + 0.028, pirateFace[1][1] + 0.07);
+    glRectf(pirateFace[0][0] - 0.172, pirateFace[0][1] + 0.10, pirateFace[0][0] + 0.172, pirateFace[0][1] + 0.11);
+
 }
 
 void myDisplay() {
-    
-    drawL();
+
+    drawFace();
     glFlush();
     glutSwapBuffers();
 }
