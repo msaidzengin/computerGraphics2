@@ -9,7 +9,7 @@
 using namespace std;
 
 
-GLint TIMER_DELAY = 200;
+GLint TIMER_DELAY = 20;
 GLfloat RED_RGB[] = { 1, 0, 0 };
 GLfloat BLUE_RGB[] = { 0, 0, 1 };
 GLfloat WHITE_RGB[] = { 1, 1, 1 };
@@ -17,8 +17,10 @@ GLfloat BLACK_RGB[] = { 0, 0, 0 };
 GLfloat SUN_RGB[] = { 0.9, 0.3, 0.2 };
 int width = 500;
 int height = 500;
-GLfloat sun[1][3] = { 0.5, 0.5, 0.5 };
+GLfloat sun[1][2] = { 0.5, 0.5 };
 float sunSize = 0.2;
+float yearDegree = 0;
+bool front = true;
 
 
 void myInit() {
@@ -38,17 +40,16 @@ void myReshape(int winWidth, int winHeight) {
 
 }
 
-void myWireSphere(float r, int nParal, int nMerid) {
+void myWireSphere(float r, int nParal, int nMerid, GLfloat color[], float xx, float yy) {
     float x, y, z, i, j;
-    glClear(GL_COLOR_BUFFER_BIT);
-    glColor3fv(SUN_RGB);
+    glColor3fv(color);
     for (j = 0; j < 3.14159; j += 3.14159 / (nParal + 1)) {
         glBegin(GL_LINE_LOOP);
         y = (float)(r * cos(j));
         for (i = 0; i < 2 * 3.14159; i += 3.14159 / 60) {
             x = (float)(r * cos(i) * sin(j));
             z = (float)(r * sin(i) * sin(j));
-            glVertex3f(x + 0.8, y + 0.8, z);
+            glVertex3f(x + xx, y + yy, z);
         }
         glEnd();
     }
@@ -57,22 +58,36 @@ void myWireSphere(float r, int nParal, int nMerid) {
         glBegin(GL_LINE_LOOP);
         for (i = 0; i < 2 * 3.14159; i += 3.14159 / 60) {
             x = (float)(r * sin(i) * cos(j));
-            y = (float)(r * cos(i + 0.5));
+            y = (float)(r * cos(i));
             z = (float)(r * sin(j) * sin(i));
-            glVertex3f(x + 0.2, y + 0.2, z);
+            glVertex3f(x + xx, y + yy, z);
         }
         glEnd();
     }
 }
 
-void drawSun() {
-
-    myWireSphere(0.2, 20, 20);
-}
-
 void myDisplay() {
 
-    drawSun();
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    float x = 0.39 * cos(yearDegree * 3.14159 / 180) + sun[0][0];
+    float y = 0.12 * sin(yearDegree * 3.14159 / 180) + sun[0][1];
+    float worldSize = -1 * 0.1 * sin(yearDegree * 3.14159 / 180) + 0.20;
+    worldSize /= 2;
+    yearDegree += 1;
+    if (yearDegree == 360) yearDegree = 1;
+    cout << worldSize << "\n";
+
+    if (y < 0.5) {
+        myWireSphere(sunSize, 20, 20, SUN_RGB, sun[0][0], sun[0][1]);
+        myWireSphere(worldSize, 20, 20, BLUE_RGB, x, y);
+    }
+    else {
+        myWireSphere(worldSize, 20, 20, BLUE_RGB, x, y);
+        myWireSphere(sunSize, 20, 20, SUN_RGB, sun[0][0], sun[0][1]);
+    }
+
+
     glFlush();
     glutSwapBuffers();
 }
