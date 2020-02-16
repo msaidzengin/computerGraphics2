@@ -1,6 +1,5 @@
 # include <GL/glut.h>
 # include <math.h>
-#include <iostream>
 
 GLint TIMER_DELAY = 20;
 GLfloat BLUE_RGB[] = { 0, 0, 1 };
@@ -11,21 +10,23 @@ float yearDegree = 0;
 float dayDegree = 0;
 
 void myInit() {
+
     glClearColor(0, 0, 0, 1);
     glShadeModel(GL_SMOOTH);
 }
 
 void myReshape(int winWidth, int winHeight) {
+
     glViewport(0, 0, winWidth, winHeight);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glutPostRedisplay();
-
 }
 
 void myWireSphere(float r, int nParal, int nMerid, GLfloat color[], float xx, float yy, int rotate) {
+
     float x, y, z, i, j;
     glColor3fv(color);
     for (j = 0; j < 3.14159; j += 3.14159 / (nParal + 1)) {
