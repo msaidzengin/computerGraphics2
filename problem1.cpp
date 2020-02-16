@@ -1,14 +1,8 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 #include <GL/glut.h>
-#include <iostream>
+#include <math.h>
 
 GLint TIMER_DELAY = 10;
 GLfloat RED_RGB[] = { 1, 0, 0 };
-GLfloat BLUE_RGB[] = { 0, 0, 1 };
-GLfloat WHITE_RGB[] = { 1, 1, 1 };
-GLfloat BLACK_RGB[] = { 0, 0, 0 };
 bool singleRotationMode = false;
 bool animationMode = false;
 int width = 500;
@@ -36,6 +30,7 @@ void myInit() {
 }
 
 void myReshape(int winWidth, int winHeight) {
+
     width = winWidth;
     height = winHeight;
     glViewport(0, 0, winWidth, winHeight);
@@ -44,7 +39,6 @@ void myReshape(int winWidth, int winHeight) {
     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glutPostRedisplay();
-
 }
 
 void drawL() {
@@ -55,7 +49,6 @@ void drawL() {
     for (int i = 0; i < 6; i++)
         glVertex2fv(Lshape[i]);
     glEnd();
-
 }
 
 void setVerticesAgain() {
@@ -77,25 +70,21 @@ void setVerticesAgain() {
 
     Lshape[5][0] = Lshape[6][0] + ((size * sqrt(10)) * cos(((atan(1.0 / 3) * 180 / 3.14159) + 90 + degree) * 3.14159 / 180));
     Lshape[5][1] = Lshape[6][1] + ((size * sqrt(10)) * sin(((atan(1.0 / 3) * 180 / 3.14159) + 90 + degree) * 3.14159 / 180));
-
 }
 
 void rollingL() {
-
 
     Lshape[6][0] = 0.5 + r * cos((dg) * 3.14159 / 180);
     Lshape[6][1] = 0.5 + r * sin((dg) * 3.14159 / 180);
 
     degree = dg - 90;
     setVerticesAgain();
-
 }
 
 void drawLAt(GLfloat x, GLfloat y) {
 
     Lshape[6][0] = x;
     Lshape[6][1] = y;
-
     setVerticesAgain();
 }
 
@@ -105,7 +94,6 @@ void myDisplay() {
         rollingL();
         dg += increase;
     }
-
     drawL();
     glFlush();
     glutSwapBuffers();
@@ -150,7 +138,6 @@ void mouseFunct(int b, int s, int x, int y) {
 
             degree = 30;
             drawLAt(mouseX, mouseY);
-            
         }
     }
 }
