@@ -1,33 +1,29 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 #include <GL/glut.h>
-#include <iostream>
+#include <math.h>
 
 GLint TIMER_DELAY = 10;
-GLfloat RED_RGB[] = { 1, 0, 0 };
-GLfloat BLUE_RGB[] = { 0, 0, 1 };
 GLfloat WHITE_RGB[] = { 1, 1, 1 };
 GLfloat BLACK_RGB[] = { 0, 0, 0 };
+GLfloat pirateFace[1][2] = {{0.5, 0.5}};
 int width = 500;
 int height = 500;
-GLfloat pirateFace[1][2] = {
-    {0.5, 0.5}
-};
+int degree = 0;
 float size = 0.2;
 float halfSize = size / 2;
-int degree = 0;
-int secDeg = 0;
 bool reduceSize = false;
 bool rotate = false;
 bool finish = false;
+int n = 360;
+float increaseDegree = 360.0 / n;
 
 void myInit() {
+
     glClearColor(0, 0, 0, 1);
     glShadeModel(GL_SMOOTH);
 }
 
 void myReshape(int winWidth, int winHeight) {
+
     width = winWidth;
     height = winHeight;
     glViewport(0, 0, winWidth, winHeight);
@@ -36,7 +32,6 @@ void myReshape(int winWidth, int winHeight) {
     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glutPostRedisplay();
-
 }
 
 void drawFace() {
@@ -59,7 +54,6 @@ void drawFace() {
     }
     glEnd();
 
-
     radius = size / 6.6666;
 
     x1 = pirateFace[0][0] + ((size / 2.34192) * sin((degree + 69.444) * 3.14159 / 180));
@@ -74,7 +68,6 @@ void drawFace() {
         glVertex2f(x2, y2);
     }
     glEnd();
-
 
     x1 = pirateFace[0][0] - ((size / 2.34192) * sin((degree + 110.556) * 3.14159 / 180));
     y1 = pirateFace[0][1] - ((size / 2.34192) * cos((degree + 110.556) * 3.14159 / 180));
@@ -98,7 +91,6 @@ void drawFace() {
         glVertex2f(x2, y2);
     }
     glEnd();
-
 
     radius = size / 2;
     glColor3fv(BLACK_RGB);
@@ -143,13 +135,14 @@ void myDisplay() {
     if (rotate) {
         reduceSize = false;
         pirateFace[0][0] += 0.0015;
-        if (degree < 360) degree += 1;
+        if (degree < 360) degree += increaseDegree;
         else finish = true;
     }
     if (finish) {
         rotate = false;
         degree = 0;
         if (pirateFace[0][0] > 0.5) pirateFace[0][0] -= 0.001;
+        else if (pirateFace[0][0] < 0.49) pirateFace[0][0] += 0.001;
         else if (size < halfSize * 2) size += 0.001;
         else finish = false;
     }
@@ -159,7 +152,6 @@ void myDisplay() {
     glutSwapBuffers();
 }
 
-// Keyboard function. Catches q,Q,1,2,3,enter
 void keyboardFunct(unsigned char c, int x, int y) {
 
     switch (c) {
@@ -167,42 +159,11 @@ void keyboardFunct(unsigned char c, int x, int y) {
     case 'Q':
         exit(0);
         break;
-    case 'r':
-        break;
     case 'a':
         reduceSize = true;
         break;
     default:
         break;
-    }
-}
-
-// Catches arrow keys.
-void catchKeyFunct(int key, int x, int y) {
-
-    if (key == GLUT_KEY_LEFT) {
-
-    }
-    else if (key == GLUT_KEY_RIGHT) {
-
-    }
-    else if (key == GLUT_KEY_DOWN) {
-
-    }
-    else if (key == GLUT_KEY_UP) {
-
-    }
-}
-
-void mouseFunct(int b, int s, int x, int y) {
-
-    if (s == GLUT_DOWN) {
-        if (b == GLUT_LEFT_BUTTON) {
-
-        }
-        if (b == GLUT_RIGHT_BUTTON) {
-
-        }
     }
 }
 
@@ -222,7 +183,6 @@ int main(int argc, char** argv) {
     glutDisplayFunc(myDisplay);
     glutKeyboardFunc(keyboardFunct);
     glutReshapeFunc(myReshape);
-    glutMouseFunc(mouseFunct);
     glutTimerFunc(TIMER_DELAY, myTimeOut, 0);
     myInit();
     glutMainLoop();
