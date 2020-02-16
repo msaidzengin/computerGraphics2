@@ -17,7 +17,9 @@ float size = 0.05;
 float degree = 0;
 float r = 0.1;
 float dg = 0;
-int n = 8;
+int n = 360;
+float increase = 360.0 / n;
+
 GLfloat Lshape[7][2] = {
     {0, 0},
     {0, 0},
@@ -54,22 +56,6 @@ void drawL() {
         glVertex2fv(Lshape[i]);
     glEnd();
 
-    GLfloat x;
-    GLfloat y;
-    glColor3fv(RED_RGB);
-    glBegin(GL_POLYGON);
-    for (int i = 0; i < 6; i++) {
-        if (Lshape[i][0] < 0.5) x = (0.5 + (0.5 - Lshape[i][0]));
-        else x = (0.5 - (Lshape[i][0] - 0.5));
-
-        if (Lshape[i][1] < 0.5) y = (0.5 + (0.5 - Lshape[i][1]));
-        else y = (0.5 - (Lshape[i][1] - 0.5));
-
-        glVertex2f(x, y);
-    }
-    glEnd();
-    
-    
 }
 
 void setVerticesAgain() {
@@ -94,13 +80,11 @@ void setVerticesAgain() {
 
 }
 
-void rollingL(float r, int n) {
+void rollingL() {
 
 
     Lshape[6][0] = 0.5 + r * cos((dg) * 3.14159 / 180);
     Lshape[6][1] = 0.5 + r * sin((dg) * 3.14159 / 180);
-
-    std::cout << Lshape[6][0] << " , " << Lshape[6][1] << "\n";
 
     degree = dg - 90;
     setVerticesAgain();
@@ -117,14 +101,16 @@ void drawLAt(GLfloat x, GLfloat y) {
 
 void myDisplay() {
 
-    rollingL(r, 1);
-    dg += 1;
+    if (animationMode) {
+        rollingL();
+        dg += increase;
+    }
+
     drawL();
     glFlush();
     glutSwapBuffers();
 }
 
-// Keyboard function. Catches q,Q,1,2,3,enter
 void keyboardFunct(unsigned char c, int x, int y) {
 
     switch (c) {
@@ -140,28 +126,12 @@ void keyboardFunct(unsigned char c, int x, int y) {
         }
         break;
     case 'a':
+    case 'A':
         animationMode = true;
-        rollingL(0.1, 1);
+        singleRotationMode = false;
         break;
     default:
         break;
-    }
-}
-
-// Catches arrow keys.
-void catchKeyFunct(int key, int x, int y) {
-
-    if (key == GLUT_KEY_LEFT) {
-
-    }
-    else if (key == GLUT_KEY_RIGHT) {
-
-    }
-    else if (key == GLUT_KEY_DOWN) {
-
-    }
-    else if (key == GLUT_KEY_UP) {
-
     }
 }
 
@@ -172,17 +142,15 @@ void mouseFunct(int b, int s, int x, int y) {
 
         }
         if (b == GLUT_RIGHT_BUTTON) {
-            if (singleRotationMode) {
-                singleRotationMode = false;
-            }
-            else {
-                singleRotationMode = true;
-                GLfloat mouseX = 1.0 * x / width;
-                GLfloat mouseY = 1.0 * (height - y) / height;
 
-                degree = 30;
-                drawLAt(mouseX, mouseY);
-            }
+            singleRotationMode = true;
+            animationMode = false;
+            GLfloat mouseX = 1.0 * x / width;
+            GLfloat mouseY = 1.0 * (height - y) / height;
+
+            degree = 30;
+            drawLAt(mouseX, mouseY);
+            
         }
     }
 }
